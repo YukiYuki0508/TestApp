@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
-  const Home({
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
     Key key,
   }) : super(key: key);
 
