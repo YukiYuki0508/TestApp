@@ -15,9 +15,13 @@ class InputScreen extends StatefulWidget {
 class _InputScreenState extends State<InputScreen> {
   final _formKey = GlobalKey<FormState>();
   String _text;
+  bool isSaved;
   @override
   void initState() {
     super.initState();
+    setState(() {
+      isSaved = false;
+    });
   }
 
   static void createUserData(currentUser, email) {
@@ -46,6 +50,9 @@ class _InputScreenState extends State<InputScreen> {
           "text": _text,
           "createdAt": DateTime.now(),
         })));
+    setState(() {
+      isSaved = true;
+    });
   }
 
   @override
@@ -56,64 +63,76 @@ class _InputScreenState extends State<InputScreen> {
         ),
         body: Form(
             key: _formKey,
-            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+            child: Center(
+              child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    width: 120.0,
-                    child: Text(
-                      "テキスト",
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextFormField(
-                        maxLines: 1,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        autofocus: false,
-                        decoration: InputDecoration(
-                          errorMaxLines: 4,
-                          hintText: '22.0',
-                          border: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(0.0),
+                  Padding(
+                      padding: EdgeInsets.only(top: 24.0),
+                      child: Text(
+                        "テキストを入力してください",
+                      )),
+                  Padding(
+                      padding: EdgeInsets.all(24.0),
+                      child: Expanded(
+                        flex: 1,
+                        child: TextFormField(
+                            maxLines: 1,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                            autofocus: false,
+                            decoration: InputDecoration(
+                              errorMaxLines: 4,
+                              hintText: 'テキスト',
+                              border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(0.0),
+                                ),
+                                borderSide: BorderSide(
+                                  width: 0.0,
+                                ),
+                              ),
                             ),
-                            borderSide: BorderSide(
-                              width: 0.0,
-                            ),
-                          ),
-                        ),
-                        validator: (text) {
-                          if (text == null || text.isEmpty) {
-                            return 'テキストを入力してください';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          this._text = value.toString();
-                          setState(() {
-                            _text = this._text;
-                          });
-                        }),
-                  ),
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'テキストを入力してください';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              this._text = value.toString();
+                              setState(() {
+                                _text = this._text;
+                              });
+                            }),
+                      )),
                   Padding(
                     padding: EdgeInsets.only(top: 24.0),
                     child: RaisedButton(
                       color: Theme.of(context).primaryColor,
                       elevation: 5.0,
-                      child: Text("送信"),
+                      child: Text("保存"),
                       // 送信ボタンクリック時の処理
                       onPressed: () {
                         // バリデーションチェック
-                        _formKey.currentState.save();
-                        onSave();
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          onSave();
+                        }
                       },
                     ),
                   ),
+                  (isSaved == true)
+                      ? Padding(
+                          padding: EdgeInsets.only(top: 24.0),
+                          child: Text("保存されました"),
+                          // 送信ボタンクリック時の処理
+                        )
+                      : Container(
+                          width: 0,
+                          height: 0,
+                        )
                 ],
               ),
-            ])));
+            )));
   }
 }
