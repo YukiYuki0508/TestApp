@@ -6,6 +6,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import './homeScreen.dart';
 import './inputScreen.dart';
+import './loginScreen.dart';
+import './registerScreen.dart';
+import './rootScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
-      home: HomeScreen(),
+      home: RootScreen(),
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics),
       // ],
@@ -46,6 +49,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/onboard': (BuildContext context) => HomeScreen(),
         '/input': (BuildContext context) => InputScreen(),
+        '/login': (BuildContext context) => LoginScreen(),
+        '/register': (BuildContext context) => RegisterScreen(),
       },
     );
   }
