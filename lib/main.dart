@@ -1,7 +1,14 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import './homeScreen.dart';
 import './inputScreen.dart';
+import './loginScreen.dart';
+import './registerScreen.dart';
+import './rootScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,15 +39,18 @@ class MyApp extends StatelessWidget {
         primarySwatch: customSwatch,
       ),
       debugShowCheckedModeBanner: false,
-      home: Home(),
+
+      home: RootScreen(),
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics),
       // ],
       // home: Onboarding(),
       // home: RootScreen(auth: Auth(), title: 'PFC assist'),
       routes: {
-        '/onboard': (BuildContext context) => Home(),
-        '/input': (BuildContext context) => Input(),
+        '/onboard': (BuildContext context) => HomeScreen(),
+        '/input': (BuildContext context) => InputScreen(),
+        '/login': (BuildContext context) => LoginScreen(),
+        '/register': (BuildContext context) => RegisterScreen(),
       },
     );
   }

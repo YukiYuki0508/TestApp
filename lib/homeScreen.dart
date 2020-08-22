@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
-  const Home({
-    Key key,
-  }) : super(key: key);
-
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key key, this.uid}) : super(key: key);
+  final String uid;
   pushButton(context) {
     Navigator.of(context).pushNamed("/input");
   }
@@ -18,7 +16,7 @@ class Home extends StatelessWidget {
         body: Center(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           RaisedButton(
-            child: Text('Input画面へ'),
+            child: Text('ログインして登録画面へ'),
             onPressed: () => pushButton(context),
           )
         ])));
